@@ -6,24 +6,24 @@
   年龄: single
   性别: single
 身体:
-  年龄段: list
-  性别: list
+  年龄段: single
+  性别: single
 外貌:
-  年龄段: list
-  性别: list
+  年龄段: single
+  性别: single
   皮肤:
     肤色: single
   头发:
     发色:
-      主体发色: list
-      边角发色: list
+      主体发色: single
+      边角发色: single
     眼睛:
-      瞳色: list
+      瞳色: single
 声音:
   配音:
     声优: list
     声线: list
   特征:
-    性别: list
-    音高: list
-    年龄段: list
+    性别: single
+    音高: single
+    年龄段: single
