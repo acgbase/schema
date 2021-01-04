@@ -72,7 +72,7 @@ def _cat_prefix(prefix, title):
 
 
 def render_template(title, data):
-    keys = get_all_keys(data)
+    keys = [f"{title}/{k}" for k in get_all_keys(data)]
     help = _render_template_help_msg(keys)
     meta = _render_template_meta(keys)
     content = "\n".join(_render_template(title, None, None, data))
@@ -83,10 +83,10 @@ def _render_template(ns, prefix, title, data):
     new_prefix = _cat_prefix(prefix, title)
     if data == 'single':
         prop = ns + '/' + new_prefix
-        yield "{{Form/Box|" + title + f"| [[{prop}::" + "{{{" + new_prefix + "| {{auto|single|" + prop + "}} }}}]] }}"
+        yield "{{Form/Box|" + title + f"| [[{prop}::" + "{{{" + prop + "| {{auto|single|" + prop + "}} }}}]] }}"
     elif data == 'list':
         prop = ns + '/' + new_prefix
-        yield "{{Form/Box|" + title + "|"+"{{#arraymap:{{{" + new_prefix + "| {{auto|list|" + prop + "}} }}}|,|x|[[" +prop + "::x]]}} }}"
+        yield "{{Form/Box|" + title + "|"+"{{#arraymap:{{{" + prop + "| {{auto|list|" + prop + "}} }}}|,|x|[[" +prop + "::x]]}} }}"
     else:
         if title:
             yield "{{Form/Box|" + title + "|"
