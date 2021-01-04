@@ -17,9 +17,9 @@
     发色:
       主体发色: single
       边角发色: single
-    眼睛:
-      瞳色: list
-      睫毛颜色: single
+  眼睛:
+    瞳色: list
+    睫毛颜色: single
 声音:
   特征:
     性别: single
