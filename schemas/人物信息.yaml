@@ -21,10 +21,10 @@
       瞳色: list
       睫毛颜色: single
 声音:
-  配音:
-    声优: list
-    声线: list
   特征:
     性别: single
     音高: single
     年龄段: single
+  配音:
+    声优: list
+    声线: list
