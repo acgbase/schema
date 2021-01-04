@@ -25,14 +25,14 @@ def load_template(template, **kwargs):
 
 
 def render_form(title, data):
-    content = "\n".join(_render_form(title, 0, None, title, data))
+    content = "\n".join(_render_form(title, 0, None, None, data))
     return load_template('form', title=title, content=content)
 
 
 def _render_form(ns, depth, prefix, title, data: DataType):
     new_prefix = _cat_prefix(prefix, title)
-    prop = ns + "/" + new_prefix
     if data == "single" or data == "list":
+        prop = ns + "/" + new_prefix
         yield f'! {title}:'
         yield '| ' + "{{{field|" + prop + "}}}"
     else:
@@ -72,7 +72,7 @@ def _cat_prefix(prefix, title):
 
 
 def render_template(title, data):
-    keys = get_all_keys(title, data)
+    keys = get_all_keys(data)
     help = _render_template_help_msg(keys)
     meta = _render_template_meta(keys)
     content = "\n".join(_render_template(title, None, None, data))
@@ -99,7 +99,7 @@ def _render_template(ns, prefix, title, data):
         yield "}}"
 
 
-def get_all_keys(title, data):
+def get_all_keys(data):
     return list(_get_prefixes(None, data))
 
 
