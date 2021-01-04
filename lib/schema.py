@@ -81,9 +81,9 @@ def render_template(title, data):
 def _render_template(prefix, title, data):
     new_prefix = _cat_prefix(prefix, title)
     if data == 'single':
-        yield f"* '''{new_prefix}:''' [[{new_prefix}::" + "{{{" + new_prefix + "| {{auto|single|" + new_prefix + "}} }}}]]"
+        yield f"* '''{title}:''' [[{new_prefix}::" + "{{{" + new_prefix + "| {{auto|single|" + new_prefix + "}} }}}]]"
     elif data == 'list':
-        yield f"* '''{new_prefix}:'''"+"{{#arraymap:{{{" + new_prefix + "| {{auto|list|" + new_prefix + "}} }}}|,|x|[[" +new_prefix + "::x]]}}"
+        yield f"* '''{title}:'''"+"{{#arraymap:{{{" + new_prefix + "| {{auto|list|" + new_prefix + "}} }}}|,|x|[[" +new_prefix + "::x]]}}"
     else:
         if title:
             yield "{{Form/Box|" + title + "|"
