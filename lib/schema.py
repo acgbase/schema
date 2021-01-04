@@ -83,11 +83,11 @@ def _render_template(ns, prefix, title, data):
     new_prefix = _cat_prefix(prefix, title)
     if data == 'single':
         prop = ns + '/' + new_prefix
-        get_value = "{{auto|single|" + new_prefix + "| {{{" + new_prefix + "|}}} }}"
+        get_value = "{{auto|single|" + prop + "| {{{" + new_prefix + "|}}} }}"
         yield "{{Form/Box|" + title + f"| [[{prop}::" + get_value + "]] }}"
     elif data == 'list':
         prop = ns + '/' + new_prefix
-        get_value = "{{auto|list|" + new_prefix + "| {{{" + new_prefix + "|}}} }}"
+        get_value = "{{auto|list|" + prop + "| {{{" + new_prefix + "|}}} }}"
         yield "{{Form/Box|" + title + "|"+"{{#arraymap:" + get_value + "|,|x|[[" + prop + "::x]]}} }}"
     else:
         if title:
