@@ -1,5 +1,6 @@
 <noinclude>
 这是“<<<title>>>”表单。要用这个表单创建一个页面，在下面输入页面名；如果使用这个名称的页面已存在，您将被送到编辑那个页面的表单。
+该表单由脚本维护，更改表单结构请[https://github.com/acgbase/schema/blob/master/schemas/<<<title>>>.yaml 点击这里]。
 
 
 {{#forminput:form=<<<title>>>}}
