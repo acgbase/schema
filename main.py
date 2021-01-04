@@ -10,8 +10,8 @@ def get_schemas():
 
 
 def main():
-    username = os.environ['USERNAME']
-    password = os.environ['PASSWORD']
+    username = os.environ['WIKI_USERNAME']
+    password = os.environ['WIKI_PASSWORD']
     uploader = SUploader(username, password)
     for nm in get_schemas():
         data = load_schema(nm)
