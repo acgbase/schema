@@ -25,7 +25,7 @@ def load_template(template, **kwargs):
 
 
 def render_form(title, data):
-    content = "\n".join(_render_form(0, None, None, data))
+    content = "\n".join(_render_form(0, None, title, data))
     return load_template('form', title=title, content=content)
 
 
@@ -36,7 +36,7 @@ def _render_form(depth, prefix, title, data: DataType):
         yield '| ' + "{{{field|" + new_prefix + "}}}"
     else:
         items, nodes = _sep_item(data.items())
-        if title is not None:
+        if title is not None and depth > 0:
             q = '=' * depth
             yield f"{q} {title} {q}"
         if items:
@@ -71,10 +71,10 @@ def _cat_prefix(prefix, title):
 
 
 def render_template(title, data):
-    keys = get_all_keys(data)
+    keys = get_all_keys(title, data)
     help = _render_template_help_msg(keys)
     meta = _render_template_meta(keys)
-    content = "\n".join(_render_template(None, None, data))
+    content = "\n".join(_render_template(None, title, data))
     return load_template('template', title=title, help=help, meta=meta, content=content)
 
 
@@ -96,8 +96,8 @@ def _render_template(prefix, title, data):
         yield "}}"
 
 
-def get_all_keys(data):
-    return list(_get_prefixes(None, data))
+def get_all_keys(title, data):
+    return list(_get_prefixes(title, data))
 
 
 def _get_prefixes(prefix, data):
