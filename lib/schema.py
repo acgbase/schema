@@ -62,17 +62,19 @@ def _sep_item(children):
 
 
 def _cat_prefix(prefix, title):
-    if prefix:
+    if prefix and title:
         return f"{prefix}/{title}"
-    else:
+    elif title:
         return title
+    else:
+        return prefix
 
 
 def render_template(title, data):
     keys = get_all_keys(data)
     help = _render_template_help_msg(keys)
     meta = _render_template_meta(keys)
-    content = "\n".join(_render_template(None, title, data))
+    content = "\n".join(_render_template(None, None, data))
     return load_template('template', title=title, help=help, meta=meta, content=content)
 
 
@@ -83,7 +85,10 @@ def _render_template(prefix, title, data):
     elif data == 'list':
         yield f"* '''{new_prefix}:'''"+"{{#arraymap:{{{" + new_prefix + "| {{auto|list|" + new_prefix + "}} }}}|,|x|[[" +new_prefix + "::x]]}}"
     else:
-        yield "{{Form/Box|" + title + "|"
+        if title:
+            yield "{{Form/Box|" + title + "|"
+        else:
+            yield "{{Form/Box| |"
         for k, v in data.items():
             yield from _render_template(new_prefix, k, v)
         yield "}}"
