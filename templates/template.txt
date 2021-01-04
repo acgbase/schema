@@ -6,11 +6,10 @@
 }}
 </pre>
 编辑页面以阅读模板文本。
-</noinclude><includeonly>{{<<<title>>>/标题}}
+</noinclude><includeonly>{{信息组件/容器| {{信息组件/标题}}
 <<<content>>>
-
 [[分类:<<<title>>>]]
-</includeonly>
+}}</includeonly>
 <noinclude>
 <templatedata>
 <<<meta>>>
