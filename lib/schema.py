@@ -25,15 +25,16 @@ def load_template(template, **kwargs):
 
 
 def render_form(title, data):
-    content = "\n".join(_render_form(0, None, title, data))
+    content = "\n".join(_render_form(title, 0, None, title, data))
     return load_template('form', title=title, content=content)
 
 
-def _render_form(depth, prefix, title, data: DataType):
+def _render_form(ns, depth, prefix, title, data: DataType):
     new_prefix = _cat_prefix(prefix, title)
+    prop = ns + "/" + new_prefix
     if data == "single" or data == "list":
         yield f'! {title}:'
-        yield '| ' + "{{{field|" + new_prefix + "}}}"
+        yield '| ' + "{{{field|" + prop + "}}}"
     else:
         items, nodes = _sep_item(data.items())
         if title is not None and depth > 0:
@@ -44,10 +45,10 @@ def _render_form(depth, prefix, title, data: DataType):
             for i, (k, v) in enumerate(items):
                 if i:
                     yield '|-'
-                yield from _render_form(depth + 1, new_prefix, k, v)
+                yield from _render_form(ns, depth + 1, new_prefix, k, v)
             yield '|}'
         for k, v in nodes:
-            yield from _render_form(depth + 1, new_prefix, k, v)
+            yield from _render_form(ns, depth + 1, new_prefix, k, v)
 
 
 def _sep_item(children):
@@ -74,30 +75,32 @@ def render_template(title, data):
     keys = get_all_keys(title, data)
     help = _render_template_help_msg(keys)
     meta = _render_template_meta(keys)
-    content = "\n".join(_render_template(None, title, data))
+    content = "\n".join(_render_template(title, None, None, data))
     return load_template('template', title=title, help=help, meta=meta, content=content)
 
 
-def _render_template(prefix, title, data):
+def _render_template(ns, prefix, title, data):
     new_prefix = _cat_prefix(prefix, title)
     if data == 'single':
-        get_value = "{{auto|single|" + new_prefix+ "| {{{" + new_prefix + "|}}} }}"
-        yield "{{Form/Box|" + title + f"| [[{new_prefix}::" + get_value + "]] }}"
+        prop = ns + '/' + new_prefix
+        get_value = "{{auto|single|" + new_prefix + "| {{{" + new_prefix + "|}}} }}"
+        yield "{{Form/Box|" + title + f"| [[{prop}::" + get_value + "]] }}"
     elif data == 'list':
+        prop = ns + '/' + new_prefix
         get_value = "{{auto|list|" + new_prefix + "| {{{" + new_prefix + "|}}} }}"
-        yield "{{Form/Box|" + title + "|"+"{{#arraymap:" + get_value + "|,|x|[[" +new_prefix + "::x]]}} }}"
+        yield "{{Form/Box|" + title + "|"+"{{#arraymap:" + get_value + "|,|x|[[" + prop + "::x]]}} }}"
     else:
         if title:
             yield "{{Form/Box|" + title + "|"
         else:
-            yield "{{Form/Box| |"
+            yield "{{Form/Box|" + ns + "|"
         for k, v in data.items():
-            yield from _render_template(new_prefix, k, v)
+            yield from _render_template(ns, new_prefix, k, v)
         yield "}}"
 
 
 def get_all_keys(title, data):
-    return list(_get_prefixes(title, data))
+    return list(_get_prefixes(None, data))
 
 
 def _get_prefixes(prefix, data):
