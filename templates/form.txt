@@ -1,0 +1,23 @@
+<noinclude>
+这是“<<<title>>>”表单。要用这个表单创建一个页面，在下面输入页面名；如果使用这个名称的页面已存在，您将被送到编辑那个页面的表单。
+
+
+{{#forminput:form=<<<title>>>}}
+
+</noinclude><includeonly>
+<div id="wikiPreview" style="display: none; padding-bottom: 25px; margin-bottom: 25px; border-bottom: 1px solid #AAAAAA;"></div>
+{{{for template|<<<title>>>}}}
+<<<content>>>
+{{{end template}}}
+
+'''自由文本:'''
+
+{{{standard input|free text|rows=10}}}
+
+
+{{{standard input|summary}}}
+
+{{{standard input|minor edit}}} {{{standard input|watch}}}
+
+{{{standard input|save}}} {{{standard input|preview}}} {{{standard input|changes}}} {{{standard input|cancel}}}
+</includeonly>
