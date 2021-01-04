@@ -18,7 +18,7 @@
       主体发色: single
       边角发色: single
     眼睛:
-      瞳色: single
+      瞳色: list
 声音:
   配音:
     声优: list
