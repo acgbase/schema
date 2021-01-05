@@ -31,15 +31,7 @@ def render_form(title, data):
 
 def _render_form(ns, depth, prefix, title, data: DataType):
     new_prefix = _cat_prefix(prefix, title)
-    if data == "single" or data == "list":
-        prop = ns + "/" + new_prefix
-        yield f'! {title}:'
-        yield '| ' + "{{{field|" + prop + "}}}"
-    elif data == "file":
-        prop = ns + "/" + new_prefix
-        yield f'! {title}:'
-        yield "| {{{field|" + prop + "|uploadable|values from namespace=File}}}"
-    else:
+    if isinstance(data, dict):
         items, nodes = _sep_item(data.items())
         if title is not None and depth > 0:
             q = '=' * depth
@@ -53,6 +45,21 @@ def _render_form(ns, depth, prefix, title, data: DataType):
             yield '|}'
         for k, v in nodes:
             yield from _render_form(ns, depth + 1, new_prefix, k, v)
+    else:
+        if isinstance(data, list):
+            data_type, args = data
+        else:
+            data_type = data
+            args = {}
+        if data_type == "single" or data_type == "list":
+            prop = ns + "/" + new_prefix
+            yield f'! {title}:'
+            yield '| ' + "{{{field|" + prop + "}}}"
+        elif data_type == "file":
+            prop = ns + "/" + new_prefix
+            yield f'! {title}:'
+            yield "| {{{field|" + prop + "|uploadable|values from namespace=File}}}"
+
 
 
 def _sep_item(children):
@@ -85,17 +92,7 @@ def render_template(title, data):
 
 def _render_template(ns, prefix, title, data):
     new_prefix = _cat_prefix(prefix, title)
-    if data == 'single':
-        prop = ns + '/' + new_prefix
-        yield "{{Form/Box/Item|" + title + f"| [[{prop}::" + "{{{" + prop + "| {{auto|single|" + prop + "}} }}}]] }}"
-    elif data == 'list':
-        prop = ns + '/' + new_prefix
-        yield "{{Form/Box/Item|" + title + "|" + "{{#arraymap:{{{" + prop + "| {{auto|list|" + prop + "}} }}}|,|x|[[" + prop + "::x]]}} }}"
-    elif data == 'file':
-        prop = ns + '/' + new_prefix
-        val = "{{{" + prop + "| {{auto|single|" + prop + "}} }}}"
-        yield "{{Form/Box/Item|" + title + f"| [[File:" + val + "|link=]] {{#set:" + prop + " = " + val + " }} }}"
-    else:
+    if isinstance(data, dict):
         if title:
             yield "{{Form/Box|" + title + "|"
         else:
@@ -103,6 +100,46 @@ def _render_template(ns, prefix, title, data):
         for k, v in data.items():
             yield from _render_template(ns, new_prefix, k, v)
         yield "}}"
+    else:
+        if isinstance(data, list):
+            data_type, args = data
+        else:
+            data_type = data
+            args = {}
+        prop = ns + '/' + new_prefix
+        val_temp = None
+        if 'display' in args:
+            val_temp = _template_display_temp[args['display']]
+        if data_type == 'single':
+            value_getter = "{{{" + prop + "| {{auto|single|" + prop + "}} }}}"
+            content = _template_render_value(prop, value_getter, val_temp)
+        elif data_type == 'list':
+            value_getter = "{{{" + prop + "| {{auto|list|" + prop + "}} }}}"
+            _renderer = _template_render_value(prop, "x", val_temp)
+            content = _call_special_temp("arraymap", value_getter, ",", "x", _renderer)
+        elif data_type == 'file':
+            value_getter = "{{{" + prop + "| {{auto|single|" + prop + "}} }}}"
+            content = "[[File:" + value_getter + "|link=]] {{#set:" + prop + " = " + value_getter + " }}"
+        else:
+            raise ValueError(data)
+        yield _call_temp("Form/Box/Item", title, content)
+
+def _template_render_value(prop, val_sym, val_temp):
+    if val_temp is None:
+        return f"[[{prop}::{val_sym}]]"
+    else:
+        return f"[[{prop}::{val_sym}]]" + _call_temp(val_temp, val_sym)
+
+def _call_temp(name, *args):
+    return "{{" + name + "|" + "|".join(args) + "}}"
+
+def _call_special_temp(name, *args):
+    return "{{#" + name + ":" + "|".join(args) + "}}"
+
+_template_display_temp = {
+    'color': '属性/颜色'
+}
+
 
 
 def get_all_keys(data):

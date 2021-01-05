@@ -10,23 +10,25 @@
   年龄段: single
   性别: single
 外貌:
-  图片: file
-  年龄段: single
+#  年龄段: single
   性别: single
+  头身比: single
   皮肤:
-    肤色: single
+    肤色: [single, {display: color}]
   头发:
     发色:
-      主体发色: single
-      边角发色: single
+      主体发色: [single, {display: color}]
+      边角发色: [single, {display: color}]
   眼睛:
-    瞳色: list
-    睫毛颜色: single
+    瞳色: [list, {display: color}]
+    睫毛颜色: [single, {display: color}]
+    眉毛颜色: [single, {display: color}]
+  图片: file
 声音:
   特征:
     性别: single
-    音高: single
-    年龄段: single
+#    音高: single
+#    年龄段: single
   配音:
     声优: list
     声线: list
