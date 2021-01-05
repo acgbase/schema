@@ -35,6 +35,10 @@ def _render_form(ns, depth, prefix, title, data: DataType):
         prop = ns + "/" + new_prefix
         yield f'! {title}:'
         yield '| ' + "{{{field|" + prop + "}}}"
+    elif data == "file":
+        prop = ns + "/" + new_prefix
+        yield f'! {title}:'
+        yield "| {{{field|" + prop + "|uploadable|values from namespace=File}}}"
     else:
         items, nodes = _sep_item(data.items())
         if title is not None and depth > 0:
@@ -86,7 +90,11 @@ def _render_template(ns, prefix, title, data):
         yield "{{Form/Box|" + title + f"| [[{prop}::" + "{{{" + prop + "| {{auto|single|" + prop + "}} }}}]] }}"
     elif data == 'list':
         prop = ns + '/' + new_prefix
-        yield "{{Form/Box|" + title + "|"+"{{#arraymap:{{{" + prop + "| {{auto|list|" + prop + "}} }}}|,|x|[[" +prop + "::x]]}} }}"
+        yield "{{Form/Box|" + title + "|" + "{{#arraymap:{{{" + prop + "| {{auto|list|" + prop + "}} }}}|,|x|[[" + prop + "::x]]}} }}"
+    elif data == 'file':
+        prop = ns + '/' + new_prefix
+        val = "{{{" + prop + "| {{auto|single|" + prop + "}} }}}"
+        yield "{{Form/Box|" + title + f"| [[File:" + val + "|link=]] {{#set:" + prop + " = " + val + " }} }}"
     else:
         if title:
             yield "{{Form/Box|" + title + "|"
