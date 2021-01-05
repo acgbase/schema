@@ -87,14 +87,14 @@ def _render_template(ns, prefix, title, data):
     new_prefix = _cat_prefix(prefix, title)
     if data == 'single':
         prop = ns + '/' + new_prefix
-        yield "{{Form/Box|" + title + f"| [[{prop}::" + "{{{" + prop + "| {{auto|single|" + prop + "}} }}}]] }}"
+        yield "{{Form/Box/Item|" + title + f"| [[{prop}::" + "{{{" + prop + "| {{auto|single|" + prop + "}} }}}]] }}"
     elif data == 'list':
         prop = ns + '/' + new_prefix
-        yield "{{Form/Box|" + title + "|" + "{{#arraymap:{{{" + prop + "| {{auto|list|" + prop + "}} }}}|,|x|[[" + prop + "::x]]}} }}"
+        yield "{{Form/Box/Item|" + title + "|" + "{{#arraymap:{{{" + prop + "| {{auto|list|" + prop + "}} }}}|,|x|[[" + prop + "::x]]}} }}"
     elif data == 'file':
         prop = ns + '/' + new_prefix
         val = "{{{" + prop + "| {{auto|single|" + prop + "}} }}}"
-        yield "{{Form/Box|" + title + f"| [[File:" + val + "|link=]] {{#set:" + prop + " = " + val + " }} }}"
+        yield "{{Form/Box/Item|" + title + f"| [[File:" + val + "|link=]] {{#set:" + prop + " = " + val + " }} }}"
     else:
         if title:
             yield "{{Form/Box|" + title + "|"
