@@ -119,7 +119,7 @@ def _render_template(ns, prefix, title, data):
             content = _call_special_temp("arraymap", value_getter, ",", "x", _renderer)
         elif data_type == 'file':
             value_getter = "{{{" + prop + "| {{auto|single|" + prop + "}} }}}"
-            content = "[[File:" + value_getter + "|link=]] {{#set:" + prop + " = " + value_getter + " }}"
+            content = "[[File:" + value_getter + "|300px|link=]] {{#set:" + prop + " = " + value_getter + " }}"
         else:
             raise ValueError(data)
         yield _call_temp("Form/Box/Item", title, content)

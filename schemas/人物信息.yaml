@@ -10,8 +10,8 @@
   年龄段: single
   性别: single
 外貌:
-#  年龄段: single
   性别: single
+#  年龄段: single
   头身比: single
   皮肤:
     肤色: [single, {display: color}]
@@ -28,7 +28,8 @@
   特征:
     性别: single
 #    音高: single
-#    年龄段: single
+    年龄段: single
+    已变声: single
   配音:
     声优: list
     声线: list
