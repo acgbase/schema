@@ -1,6 +1,8 @@
 import unittest
 
-from lib.schema import load_schema, render_form, render_template
+from lib.schema.form import render_form
+from lib.schema.template import render_template
+from lib.schema.utils import load_schema
 
 
 class MyTestCase(unittest.TestCase):

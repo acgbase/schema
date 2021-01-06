@@ -9,20 +9,22 @@
 身体:
   年龄段: single
   性别: single
+  身高: single
+  体重: single
 外貌:
   性别: single
 #  年龄段: single
-  头身比: single
+  头身比: [single, {prop_type: '数值型'}]
   皮肤:
-    肤色: [single, {display: color}]
+    肤色: [single, {display: color, prop_temp: '属性取值/基本颜色'}]
   头发:
     发色:
-      主体发色: [single, {display: color}]
-      边角发色: [single, {display: color}]
+      主体发色: [single, {display: color, prop_temp: '属性取值/基本颜色'}]
+      边角发色: [single, {display: color, prop_temp: '属性取值/基本颜色'}]
   眼睛:
-    瞳色: [list, {display: color}]
-    睫毛颜色: [single, {display: color}]
-    眉毛颜色: [single, {display: color}]
+    瞳色: [list, {display: color, prop_temp: '属性取值/基本颜色'}]
+    睫毛颜色: [single, {display: color, prop_temp: '属性取值/基本颜色'}]
+    眉毛颜色: [single, {display: color, prop_temp: '属性取值/基本颜色'}]
   图片: file
 声音:
   特征:
