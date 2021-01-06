@@ -3,8 +3,8 @@ from typing import Union
 
 import yaml
 
-template_root = Path(__file__).parent.parent / 'templates'
-schema_root = Path(__file__).parent.parent / 'schemas'
+template_root = Path(__file__).parent.parent.parent / 'templates'
+schema_root = Path(__file__).parent.parent.parent / 'schemas'
 
 DataType = Union[str, dict]
 
@@ -30,3 +30,17 @@ def cat_prefix(prefix, title):
         return title
     else:
         return prefix
+
+def call_temp(name, *args):
+    return "{{" + "|".join([name, *args]) + "}}"
+
+def call_special_temp(name, *args):
+    return "{{#" + name + ":" + "|".join(args) + "}}"
+
+def parse_title(title):
+    if title is None:
+        return None, None
+    elif title.startswith("+"):
+        return '+', title[1:]
+    else:
+        return None, title

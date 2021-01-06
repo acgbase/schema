@@ -33,3 +33,8 @@ jobs:
         WIKI_PASSWORD: "${{ secrets.WIKI_PASSWORD }}" 
       run: |
         python main.py
+    - name: Update Hashes
+      run: |
+        git add pagehash
+        git commit -m 'Auto Update Hash'
+        git push origin master

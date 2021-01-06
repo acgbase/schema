@@ -1,7 +1,10 @@
 import hashlib
+import time
+import traceback
 from pathlib import Path
 
 import mwclient
+import requests
 
 pagehash = Path(__file__).parent.parent / 'pagehash'
 
@@ -16,9 +19,21 @@ class SUploader:
         if self._cmp(title, text):
             print("Upload:", title)
             page = self.site.pages[title]
-            page.edit(text=text, summary='schema bot maintaining')
+            self._safe_edit(page, text)
+            return True
         else:
             print("Ignore:", title)
+            return False
+
+    def _safe_edit(self, page, text):
+        while True:
+            try:
+                page.edit(text=text, summary='schema bot maintaining')
+            except (mwclient.errors.APIError, requests.exceptions.RequestException):
+                traceback.print_exc()
+                time.sleep(20)
+            else:
+                break
 
 
 class _FileCmp:
@@ -47,4 +62,5 @@ class _FileCmp:
             f.write(fhash)
 
     def _hash_file(self, name):
+        name = name.replace(":", "_").replace("/", "_")
         return pagehash / f'{name}.txt'

@@ -1,37 +1,135 @@
 姓名:
-  中文: list
-  英文: list
-  日文: list
+  中文: [list, &text {prop_type: '文本型'}]
+  英文: [list, *text]
+  日文: [list, *text]
+别称:
+  中文: [ list, *text ]
+  英文: [ list, *text ]
+  日文: [ list, *text ]
 基本信息:
-  年龄: single
-  性别: single
-  介绍页: single
+  年龄: [single, {prop_type: '数值型'}]
+  性别: [single, {prop_temp: '属性取值/性别'}]
+  介绍页: [single, {prop_type: 'URL类'}]
 身体:
-  年龄段: single
-  性别: single
-  身高: single
-  体重: single
+  年龄段: [single, {prop_temp: '属性取值/年龄段'}]
+  性别: [single, {prop_temp: '属性取值/性别'}]
+  身高: [single, {prop_temp: '属性取值/身高'}]
+  体重: [single, {prop_temp: '属性取值/体重'}]
 外貌:
-  性别: single
-#  年龄段: single
-  头身比: [single, {prop_type: '数值型'}]
+  性别: [single, {prop_temp: '属性取值/性别估计'}]
+  年龄段: [single, {prop_temp: '属性取值/年龄段'}]
+  头身比: [single, {prop_type: '文本型', prop_values: ['二头身','三头身','四头身','五头身','六头身','七头身','八头身','九头身','其他','不适用']}]
   皮肤:
-    肤色: [single, {display: color, prop_temp: '属性取值/基本颜色'}]
+    肤色: [single, {temp_temp: '属性/颜色', prop_temp: '属性取值/肤色'}]
   头发:
     发色:
-      主体发色: [single, {display: color, prop_temp: '属性取值/基本颜色'}]
-      边角发色: [single, {display: color, prop_temp: '属性取值/基本颜色'}]
+      主体发色: [single, &color {temp_temp: '属性/颜色', prop_temp: '属性取值/基本颜色'}]
+      边角发色: [single, *color]
   眼睛:
-    瞳色: [list, {display: color, prop_temp: '属性取值/基本颜色'}]
-    睫毛颜色: [single, {display: color, prop_temp: '属性取值/基本颜色'}]
-    眉毛颜色: [single, {display: color, prop_temp: '属性取值/基本颜色'}]
-  图片: file
+    瞳色: [list, *color]
+    睫毛颜色: [single, *color]
+    眉毛颜色: [single, *color]
+  +特殊器官:
+    毛发:
+      类型: [list, {prop_type: '文本型', prop_values: [体表绒毛]}]
+      可隐藏: [ single, { prop_type: '布尔型' } ]
+      颜色: &color_group
+        主体颜色: [ list, *color ]
+        边角颜色: [ list, *color ]
+    头部:
+      类型: [list, {prop_type: '文本型', prop_values: [耳朵, 角]}]
+      可隐藏: [single, {prop_type: '布尔型'}]
+      颜色: *color_group
+    躯干:
+      类型: [list, {prop_type: '文本型', prop_values: [羽翼, 皮翼, 猫尾, 狼尾, 龙尾]}]
+      可隐藏: [single, {prop_type: '布尔型'}]
+      颜色: *color_group
+    双手:
+      类型: [ list, { prop_type: '文本型', prop_values: [ 爪子 ] } ]
+      可隐藏: [ single, { prop_type: '布尔型' } ]
+      颜色: *color_group
+    双足:
+      类型: [ list, { prop_type: '文本型', prop_values: [ 爪子 ] } ]
+      可隐藏: [ single, { prop_type: '布尔型' } ]
+      颜色: *color_group
+  图片: [file, {prop_type: '页面型'}]
+  +服装:
+    +头部:
+      头发:
+        类型: [list, {prop_type: '文本型', prop_values: [发卡, 帽子, 皇冠, 头盔, 头巾, 水晶]}]
+        颜色: *color_group
+      眼睛:
+        类型: [list, {prop_type: '文本型', prop_values: [厚框眼睛, 细框眼镜, 无框眼镜, 护目镜, 防风镜, 眼罩, 面具]}]
+        颜色: *color_group
+      耳朵:
+        类型: [list, {prop_type: '文本型', prop_values: [耳机, 耳环]}]
+        颜色: *color_group
+      脸颊:
+        类型: [list, {prop_type: '文本型', prop_values: [面具, 防毒面具, 丝袜]}]
+        颜色: *color_group
+      鼻:
+        类型: [ list, { prop_type: '文本型', prop_values: [ 鼻环 ] } ]
+        颜色: *color_group
+      嘴:
+        类型: [ list, { prop_type: '文本型', prop_values: [ 口罩, 鼻环 ] } ]
+        颜色: *color_group
+    +身体:
+      脖子:
+        类型: [list, {prop_type: '文本型', prop_values: [项链, 项圈, 领带, 蝴蝶结, 西装衣领, 水手服衣领, 绒毛领]}]
+        颜色: *color_group
+      肩膀:
+        类型: [list, {prop_type: '文本型', prop_values: [肩甲, 露肩]}]
+        颜色: *color_group
+      躯干:
+        类型: [list, {prop_type: '文本型', prop_values: [T恤, 长袖衬衫, 胸甲, 卫衣, 短袖, 长袖, 水晶]}]
+        颜色: *color_group
+      腰:
+        类型: [list, {prop_type: '文本型', prop_values: [腰带]}]
+        颜色: *color_group
+    +双臂:
+      大臂:
+        类型: [list, {prop_type: '文本型', prop_values: [臂环]}]
+        颜色: *color_group
+      手肘:
+        类型: [list, {prop_type: '文本型', prop_values: [护肘]}]
+        颜色: *color_group
+      小臂:
+        类型: [list, {prop_type: '文本型', prop_values: []}]
+        颜色: *color_group
+      手腕:
+        类型: [list, {prop_type: '文本型', prop_values: [手表, 手铐]}]
+        颜色: *color_group
+      手:
+        类型: [list, {prop_type: '文本型', prop_values: [短手套, 普通手套, 长手套, 露指手套, 拳击手套]}]
+        颜色: *color_group
+    +双腿:
+      裤子或裙子:
+        类型: [ list, { prop_type: '文本型', prop_values: [ 超短裤, 短裤, 五分裤, 七分裤, 长裤, 超短裙, 短裙, 五分裙, 七分裙, 长裙, 紧身裤 ] } ]
+        颜色: *color_group
+      袜子:
+        类型: [ list, { prop_type: '文本型', prop_values: [ 长袜, 短袜, 船袜, 连裤袜 ] } ]
+        颜色: *color_group
+      鞋:
+        类型: [ list, { prop_type: '文本型', prop_values: [ 运动鞋, 高跟鞋, 板鞋, 凉鞋, 拖鞋, 短靴, 长靴 ] } ]
+        颜色: *color_group
+      大腿:
+        类型: [list, {prop_type: '文本型', prop_values: [腿环]}]
+        颜色: *color_group
+      膝盖:
+        类型: [list, {prop_type: '文本型', prop_values: [护膝]}]
+        颜色: *color_group
+      小腿:
+        类型: [list, {prop_type: '文本型', prop_values: [护膝]}]
+        颜色: *color_group
+      脚腕:
+        类型: [list, {prop_type: '文本型', prop_values: []}]
+        颜色: *color_group
 声音:
   特征:
-    性别: single
+    性别: [single, {prop_temp: '属性取值/性别估计'}]
 #    音高: single
-    年龄段: single
-    已变声: single
+    年龄段: [single, {prop_temp: '属性取值/年龄段'}]
+    已变声: [single, {prop_type: '布尔型'}]
   配音:
-    声优: list
-    声线: list
+    声优: [list, {prop_type: '页面型'}]
+    声线: [list, {prop_type: '页面型'}]

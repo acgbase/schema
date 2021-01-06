@@ -1,4 +1,4 @@
-from lib.schema.utils import load_template, DataType, cat_prefix
+from lib.schema.utils import load_template, DataType, cat_prefix, parse_title
 
 
 def render_form(title, data):
@@ -7,12 +7,16 @@ def render_form(title, data):
 
 
 def _render_form(ns, depth, prefix, title, data: DataType):
+    title_op, title = parse_title(title)
     new_prefix = cat_prefix(prefix, title)
     if isinstance(data, dict):
         items, nodes = _sep_item(data.items())
         if title is not None and depth > 0:
             q = '=' * depth
             yield f"{q} {title} {q}"
+        yield "{{indent|"
+        if title_op == '+':
+            yield '{{Collapsible|'
         if items:
             yield '{| class="formtable"'
             for i, (k, v) in enumerate(items):
@@ -22,6 +26,9 @@ def _render_form(ns, depth, prefix, title, data: DataType):
             yield '|}'
         for k, v in nodes:
             yield from _render_form(ns, depth + 1, new_prefix, k, v)
+        if title_op:
+            yield '}}'
+        yield '}}'
     else:
         if isinstance(data, list):
             data_type, args = data
@@ -35,7 +42,7 @@ def _render_form(ns, depth, prefix, title, data: DataType):
         elif data_type == "file":
             prop = ns + "/" + new_prefix
             yield f'! {title}:'
-            yield "| {{{field|" + prop + "|uploadable|values from namespace=File}}}"
+            yield "| {{{field|" + prop + "|uploadable|image preview|values from namespace=File}}}"
 
 
 
